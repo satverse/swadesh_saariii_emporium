@@ -1,0 +1,651 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  
+  <meta charset="UTF-8">
+  <title>Searched Products</title>
+
+  <style>
+    body {
+      margin: 0;
+      background: #f4f5f7;
+      font-family: "Poppins", sans-serif;
+    }
+/* ------------------------------
+    SEARCH RESULTS – PROFESSIONAL UI
+--------------------------------*/
+
+.container {
+  max-width: 1100px;
+  margin: 30px auto;
+  padding: 15px;
+}
+
+/* PRODUCT CARD */
+.product-card {
+  display: grid;
+  grid-template-columns: 160px 1fr 120px;
+  align-items: center;
+  background: #ffffff;
+  padding: 20px 25px;
+  margin-bottom: 20px;
+  border-radius: 18px;
+  border: 1px solid #e5e7eb;
+  cursor: pointer;
+  transition: 0.25s ease;
+  box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+}
+
+.product-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 10px 30px rgba(0,0,0,0.12);
+}
+
+/* PRODUCT IMAGE */
+.product-card img {
+  width: 160px;
+  height: 160px;
+  object-fit: cover;
+  border-radius: 14px;
+  border: 1px solid #f0f0f0;
+}
+
+/* INFO SECTION */
+.info {
+  padding-left: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.title {
+  font-size: 20px;
+  font-weight: 700;
+  color: #111;
+}
+
+.info-desc {
+  color: #666;
+  font-size: 14px;
+  line-height: 1.4;
+  max-width: 85%;
+}
+
+/* PRICE SECTION RIGHT SIDE */
+.price-box {
+  text-align: right;
+}
+
+.price {
+  color: #e63946;
+  font-size: 26px;
+  font-weight: 800;
+}
+
+.old-price {
+  font-size: 14px;
+  text-decoration: line-through;
+  color: #777;
+}
+
+.discount-tag {
+  background: #ffebe8;
+  color: #e63946;
+  padding: 4px 8px;
+  border-radius: 6px;
+  font-size: 12px;
+  display: inline-block;
+  margin-top: 6px;
+}
+
+/* FILTER SECTION */
+.filter-section {
+  display: flex;
+  gap: 15px;
+  margin: 20px auto;
+  justify-content: center;
+}
+
+.filter-section select,
+.filter-section button {
+  padding: 10px 14px;
+  font-size: 15px;
+  border-radius: 8px;
+  border: 2px solid #ddd;
+  cursor: pointer;
+}
+
+.filter-btn {
+  background: #111;
+  color: white;
+  border: none;
+}
+
+/* LOADING */
+.loading {
+  text-align: center;
+  margin-top: 50px;
+  font-size: 22px;
+  font-weight: 600;
+  color: #444;
+}
+
+/* MOBILE */
+@media (max-width: 650px) {
+  .product-card {
+    grid-template-columns: 1fr;
+    text-align: center;
+    padding: 20px;
+  }
+
+  .info {
+    padding-left: 0;
+    align-items: center;
+  }
+
+  .price-box {
+    text-align: center;
+    margin-top: 10px;
+  }
+}
+
+
+    /* -------------------------------------------------
+                NAVBAR FINAL CSS
+--------------------------------------------------*/
+
+.navbar {
+    width: 100%;
+    background: #ffffff;
+    padding: 14px 40px;
+    box-shadow: 0 4px 14px rgba(0,0,0,0.08);
+    display: flex;
+    align-items: center;
+    position: sticky;
+    top: 0;
+    z-index: 999;
+    gap: 20vh;
+}
+
+/* LOGO */
+.logo {
+    font-size: 26px;
+    font-weight: 700;
+    color: #111;
+    letter-spacing: .5px;
+}
+
+/* GROUP containing home + categories + search */
+.nav-group {
+    display: flex;
+    align-items: center;
+    gap: 30px;
+}
+
+/* HOME LINK */
+.nav-group a {
+    text-decoration: none;
+    font-size: 16px;
+    font-weight: 500;
+    color: #111;
+    cursor: pointer;
+}
+
+/* DROPDOWN */
+.dropdown {
+    position: relative;
+}
+
+.drop-btn {
+    cursor: pointer;
+}
+
+.dropdown-content {
+    position: absolute;
+    top: 110%;
+    left: 0;
+    width: 220px;
+    background: #fff;
+    display: none;
+    flex-direction: column;
+    border-radius: 10px;
+    box-shadow: 0 8px 20px rgba(0,0,0,0.15);
+    padding: 10px 0;
+    z-index: 1000;
+}
+
+.dropdown:hover .dropdown-content {
+    display: flex;
+}
+
+.dropdown-content button {
+    width: 100%;
+    border: none;
+    background: transparent;
+    padding: 12px 18px;
+    text-align: left;
+    cursor: pointer;
+    font-size: 15px;
+    color: #333;
+    transition: 0.2s;
+}
+
+.dropdown-content button:hover {
+    background: #ffe3ef;
+}
+
+/* SEARCH BOX */
+.search-box {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.search-box input {
+    width: 220px;
+    padding: 8px 12px;
+    border-radius: 6px;
+    font-size: 15px;
+    border: 2px solid #ddd;
+    transition: 0.3s;
+}
+
+.search-box input:focus {
+    border-color: #111;
+}
+
+.search-box button {
+    padding: 8px 16px;
+    border-radius: 6px;
+    border: none;
+    background: #111;
+    color: #fff;
+    font-size: 15px;
+    cursor: pointer;
+    transition: 0.2s;
+}
+
+.search-box button:hover {
+    opacity: 0.85;
+}
+
+
+.filter-section {
+  display: flex;
+  gap: 15px;
+  margin: 20px auto;
+  justify-content: center;
+}
+
+.filter-section select,
+.filter-section button {
+  padding: 10px 14px;
+  font-size: 15px;
+  border-radius: 8px;
+  border: 2px solid #ddd;
+  cursor: pointer;
+}
+
+.filter-btn {
+  background: #111;
+  color: white;
+  border: none;
+}
+
+.filter-btn:hover {
+  opacity: 0.85;
+}
+
+
+    
+
+  </style>
+
+</head>
+
+<body>
+
+  <div class="navbar">
+
+    <div class="logo">Swadeshi Clothing</div>
+
+    <div class="nav-group">
+
+        <a href="index.html">Home</a>
+
+        <div class="dropdown">
+            <a class="drop-btn">Categories ▾</a>
+
+            <div class="dropdown-content">
+                <button onclick="categoryMatch('saree')">Saree</button>
+                <button onclick="categoryMatch('unstich suit')">Unstich Suit</button>
+                <button onclick="categoryMatch('lehenga')">Lehenga</button>
+                <button onclick="categoryMatch('lanche')">Lanche</button>
+                <button onclick="categoryMatch('fancy dress')">Fancy Dress</button>
+                <button onclick="categoryMatch('crop top')">Crop Top</button>
+                <button onclick="categoryMatch('gown')">Gown</button>
+            </div>
+        </div>
+
+        <div class="search-box">
+            <input type="text" id="searchInput" placeholder="Search products...">
+            <button onclick="handleSearchClick()">Search</button>
+        </div>
+
+    </div>
+
+</div>
+
+<div class="filter-section">
+  <select id="priceFilter">
+    <option value="">Price Filter</option>
+    <option value="0-500">₹0 - ₹500</option>
+    <option value="500-1000">₹500 - ₹1000</option>
+    <option value="1000-2000">₹1000 - ₹2000</option>
+    <option value="2000+">₹2000+</option>
+  </select>
+
+  <select id="categoryFilter">
+    <option value="">All Categories</option>
+  </select>
+
+  <select id="sortFilter">
+    <option value="">Sort By</option>
+    <option value="low-high">Price: Low → High</option>
+    <option value="high-low">Price: High → Low</option>
+    <option value="latest">Latest First</option>
+    <option value="oldest">Oldest First</option>
+  </select>
+
+  <button class="filter-btn" id="filterbtn">Apply</button>
+</div>
+
+
+
+  <div class="container"> 
+    <div id="loading" class="loading">Loading results...</div> 
+    <div id="products"></div> 
+  </div>
+
+
+  <script type="module">
+    // --------------------
+    // Firebase Setup
+    // --------------------
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.1/firebase-app.js";
+    import { getDatabase, ref, get } from "https://www.gstatic.com/firebasejs/10.12.1/firebase-database.js";
+
+    const firebaseConfig = {
+      apiKey: "AIzaSyCA_H8mTHSPGKZxmadwDAHZfEcS3pqvLMY",
+      authDomain: "swadeshi-84d03.firebaseapp.com",
+      databaseURL: "https://swadeshi-84d03-default-rtdb.firebaseio.com",
+      projectId: "swadeshi-84d03",
+      storageBucket: "swadeshi-84d03.firebasestorage.app",
+      messagingSenderId: "1047926315874",
+      appId: "1:1047926315874:web:1a20eca775794903aaaa3b"
+    };
+
+    const app = initializeApp(firebaseConfig);
+    const db = getDatabase(app);
+
+    const params = new URLSearchParams(window.location.search);
+    const idsParam = params.get("ids");
+    const ids = JSON.parse(localStorage.getItem("mycart")) || [];
+
+
+    const productsDiv = document.getElementById("products");
+    const loading = document.getElementById("loading");
+    let productId = params.get("id") || "s6"; // default
+    let PRODUCTS_FROM_DB = {};
+
+    if (ids.length === 0) {
+      loading.innerText = "No products found.";
+    } else {
+      loadProducts();
+    }
+
+    async function loadProducts() {
+      loading.style.display = "block";
+      productsDiv.innerHTML = "";
+
+      for (let id of ids) {
+        const productRef = ref(db, "products/" + id);
+        const snap = await get(productRef);
+
+        if (snap.exists()) {
+          const p = snap.val();
+          PRODUCTS_FROM_DB[id]=p;
+          showProduct(id, p);
+        }
+      }
+
+      loading.style.display = "none";
+    }
+
+    function showProduct(id, p) {
+      const div = document.createElement("div");
+      div.className = "product-card";
+
+      div.onclick = () => {
+        window.location.href = `product.html?id=${id}`;
+      };
+
+      const thumbnail = p.media && p.media.length > 0 ? p.media[0] : "";
+  div.innerHTML = `
+    <img src="${thumbnail}" alt="Product">
+    
+    <div class="info">
+        <div class="title">${p.title}</div>
+        <div class="info-desc">${p.description?.slice(0, 90) || ""}...</div>
+    </div>
+
+    <div class="price-box">
+        <div class="price">₹${p.price}</div>
+        <div class="old-price">₹${Number(p.price) + 200}</div>
+        <div class="discount-tag">Special Price</div>
+    </div>
+  `;
+
+
+      productsDiv.appendChild(div);
+    }
+
+    async function handleSearchClick() {
+    const q = document.getElementById("searchInput").value.trim();
+    if (!q) return;
+
+    // Step 1: search run karo
+    const ids = await smartLocalSearch(q, PRODUCTS_FROM_DB);
+
+    // Step 2: IDs localStorage me save karo
+    localStorage.setItem("searchResults", JSON.stringify(ids));
+
+    // Step 3: search result page open
+    window.location.href = "searched_results.html?ids=" + ids.join(",");
+
+}
+
+
+  function smartLocalSearch(query, products) {
+    const productList = Object.entries(products).map(([id, p]) => ({
+        id,
+        ...p
+    }));
+
+    const q = query.toLowerCase().trim();
+    const words = q.split(" ").filter(Boolean);
+
+    return productList
+        .map(p => {
+            const cat = (p.category || "").toLowerCase();
+            const title = (p.title || "").toLowerCase();
+            const desc = (p.description || "").toLowerCase();
+            const tags = (p.tags || []).map(t => t.toLowerCase());
+
+            // 1️⃣ TAG strict matching: every search word must be found in some tag
+            const tagMatch = words.every(w =>
+                tags.some(tag => tag.includes(w))
+            );
+
+            // 2️⃣ Category match (priority boost)
+            const categoryMatch = cat.includes(q);
+
+            // 3️⃣ Title/Desc fallback
+            const textMatch =
+                title.includes(q) ||
+                desc.includes(q);
+
+            // 4️⃣ Decide if product qualifies
+            const qualifies = tagMatch || categoryMatch || textMatch;
+
+            if (!qualifies) return null;
+
+            // 5️⃣ Calculate score → higher score = better match
+            let score = 0;
+            if (categoryMatch) score += 3;
+            if (tagMatch) score += 5;
+            if (textMatch) score += 2;
+
+            return { ...p, score };
+        })
+        .filter(Boolean)
+        .sort((a, b) => b.score - a.score)  // best results at top
+        .map(p => p.id);
+}
+
+   // =============== FILL CATEGORY DROPDOWN =============== //
+function fillCategoryDropdown() {
+  let categories = new Set();
+
+  for (let id in PRODUCTS_FROM_DB) {
+    let c = PRODUCTS_FROM_DB[id].category;
+    if (c) categories.add(c);
+  }
+
+  const dropdown = document.getElementById("categoryFilter");
+  categories.forEach(cat => {
+    const opt = document.createElement("option");
+    opt.value = cat;
+    opt.innerHTML = cat;
+    dropdown.appendChild(opt);
+  });
+}
+
+fillCategoryDropdown();
+
+
+// =============== APPLY FILTERS =============== //
+document.getElementById("filterbtn").addEventListener("click", applyFilters);
+
+
+function applyFilters() {
+    const priceVal = document.getElementById("priceFilter").value;
+    const categoryVal = document.getElementById("categoryFilter").value;
+    const sortVal = document.getElementById("sortFilter").value;
+
+    // Start with all products
+    let filtered = Object.entries(PRODUCTS_FROM_DB).map(([id, p]) => ({
+        id,
+        ...p
+    }));
+
+    // ---------------- PRICE FILTER ----------------
+    if (priceVal) {
+        filtered = filtered.filter(p => {
+            const price = Number(p.price);
+
+            if (priceVal === "0-500") return price >= 0 && price <= 500;
+            if (priceVal === "500-1000") return price >= 500 && price <= 1000;
+            if (priceVal === "1000-2000") return price >= 1000 && price <= 2000;
+            if (priceVal === "2000+") return price >= 2000;
+        });
+    }
+
+    // ---------------- CATEGORY FILTER ----------------
+    if (categoryVal) {
+        filtered = filtered.filter(p => p.category === categoryVal);
+    }
+
+    // ---------------- SORTING ----------------
+    if (sortVal === "low-high") {
+        filtered.sort((a, b) => Number(a.price) - Number(b.price));
+    } 
+    else if (sortVal === "high-low") {
+        filtered.sort((a, b) => Number(b.price) - Number(a.price));
+    } 
+    else if (sortVal === "latest") {
+        filtered.sort((a, b) => (b.createdAt || 0) - (a.createdAt || 0));
+    } 
+    else if (sortVal === "oldest") {
+        filtered.sort((a, b) => (a.createdAt || 0) - (b.createdAt || 0));
+    }
+
+    showFilteredProducts(filtered);
+}
+
+
+// ----------- RENDER FILTERED PRODUCTS -----------
+
+function showFilteredProducts(list) {
+    productsDiv.innerHTML = ""; 
+
+    if (list.length === 0) {
+        productsDiv.innerHTML = "<h2>No products found.</h2>";
+        return;
+    }
+
+    list.forEach(p => {
+        const div = document.createElement("div");
+        div.className = "product-card";
+
+        div.onclick = () => {
+            window.location.href = `product.html?id=${p.id}`;
+        };
+
+        const thumbnail = p.media && p.media.length > 0 ? p.media[0] : "";
+
+        div.innerHTML = `
+            <img src="${thumbnail}" alt="Product">
+
+            <div class="info">
+                <div class="title">${p.title}</div>
+                <div class="info-desc">${p.description?.slice(0, 90) || ""}...</div>
+            </div>
+
+            <div class="price-box">
+                <div class="price">₹${p.price}</div>
+                <div class="old-price">₹${Number(p.price) + 200}</div>
+                <div class="discount-tag">Special Price</div>
+            </div>
+        `;
+
+        productsDiv.appendChild(div);
+    });
+}
+
+
+
+  </script>
+  <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
+<script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-database.js"></script>
+
+  <script src="main.js"></script>
+
+</body>
+
+</html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+

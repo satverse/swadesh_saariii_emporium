@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Buy Product</title>
+
+  <style>
+    body {
+      font-family: "Poppins", sans-serif;
+      background: #f4f5f7;
+      margin: 0;
+      padding: 0;
+    }
+
+    .contact-section {
+      max-width: 900px;
+      margin: 40px auto;
+      padding: 20px;
+    }
+
+    .contact-wrapper {
+      display: flex;
+      gap: 30px;
+      flex-wrap: wrap;
+    }
+
+    .contact-box {
+      flex: 1 1 350px;
+      background: #fff;
+      padding: 25px;
+      border-radius: 12px;
+      box-shadow: 0 4px 14px rgba(0,0,0,0.1);
+    }
+
+    .contact-box input,
+    .contact-box textarea {
+      width: 90%;
+      padding: 14px;
+      margin: 10px 0;
+      border: 1px solid #ccc;
+      border-radius: 8px;
+      font-size: 16px;
+    }
+
+    button {
+      width: 100%;
+      padding: 14px;
+      background: #111;
+      color: #fff;
+      border: none;
+      font-size: 18px;
+      border-radius: 10px;
+      cursor: pointer;
+    }
+
+    .contact-info-block {
+      background: #fff;
+      padding: 20px;
+      margin-bottom: 10px;
+      border-radius: 12px;
+      box-shadow: 0 4px 14px rgba(0,0,0,0.1);
+    }
+  </style>
+</head>
+
+<body>
+
+<!-- CONTACT -->
+<div class="contact-section">
+    <h2>Order Product</h2>
+
+    <div class="contact-wrapper">
+
+        <div class="contact-box">
+            <h2>Complete Your Order</h2>
+
+            <!-- ⭐ FORM ACTION: Formspree URL ⭐ -->
+            <form action="https://formspree.io/f/movzadod" method="POST">
+
+                <!-- Product ID (auto filled, hidden) -->
+                <input type="hidden" id="productIdField" name="product_id">
+
+                <input type="text" name="name" placeholder="Your Name" required>
+                <input type="email" name="email" placeholder="Your Email" required>
+                <input type="text" name="address" placeholder="Full Address" required>
+                
+                <textarea name="message" placeholder="Extra Notes (optional)"></textarea>
+
+                <button type="submit">Place Order</button>
+            </form>
+              <div class="contact-info-block"><p><b>NOTE-</b> Delivery charges - Rs.60</p></div>
+        </div>
+
+        <div>
+        <div class="contact-info-block"><h3>📍 Address</h3><p>Swadeshi saree emporium <br>Saidpur road Gulaothi</p></div>
+        <div class="contact-info-block"><h3>📧 Email</h3><p>goyalmadhav47@gmail.com</p></div>
+        <div class="contact-info-block"><h3>📞 Phone</h3><p>+91 9412825557</p></div>
+        </div>
+
+    </div>
+</div>
+
+<script>
+    // URL se product ID nikaalna
+    const urlParams = new URLSearchParams(window.location.search);
+    const productId = urlParams.get("id");
+
+    // Hidden input me set karna
+    document.getElementById("productIdField").value = productId;
+</script>
+
+</body>
+</html>

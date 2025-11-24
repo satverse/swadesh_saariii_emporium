@@ -1,0 +1,713 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Product Page</title>
+<style>
+    :root {
+        --bg: #f7f8fa;
+        --primary: #111;
+        --secondary: #555;
+        --white: #fff;
+        --radius: 14px;
+        --shadow: 0 4px 14px rgba(0,0,0,0.08);
+    }
+
+    body {
+        margin: 0;
+        background: var(--bg);
+        font-family: "Poppins", sans-serif;
+        color: var(--primary);
+        width: 100%;
+        max-width: 100% !important;
+        overflow-x: hidden;
+    }
+
+    /* LAYOUT */
+    .container {
+        display: flex;
+        padding: 30px 50px;
+        gap: 40px;
+    }
+
+    /* LEFT SECTION */
+    .left {
+        width: 50%;
+    }
+
+    .main-img {
+        width: 100%;
+        height: 460px;
+        background: #eaeaea;
+        border-radius: var(--radius);
+        overflow: hidden;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        box-shadow: var(--shadow);
+    }
+
+    .main-img img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+    }
+
+    .thumbs {
+        margin-top: 14px;
+        display: flex;
+        gap: 12px;
+    }
+
+    .thumbs img {
+        width: 80px;
+        height: 80px;
+        object-fit: cover;
+        border-radius: var(--radius);
+        cursor: pointer;
+        border: 2px solid transparent;
+        transition: 0.3s;
+    }
+
+    .thumbs img:hover {
+        border-color: var(--primary);
+    }
+
+    /* RIGHT SIDE */
+ .Right, .right {
+    width: 50%;
+    padding-right: 20px;
+}
+
+
+    .category {
+        font-size: 14px;
+        color: var(--secondary);
+        margin-bottom: 6px;
+    }
+
+    .title {
+        font-size: 32px;
+        font-weight: 600;
+        margin-bottom: 18px;
+    }
+
+    .price {
+        font-size: 28px;
+        font-weight: 600;
+        margin-bottom: 8px;
+    }
+
+    .desc {
+        font-size: 15px;
+        margin-top: 10px;
+        color: var(--secondary);
+        line-height: 1.6;
+    }
+
+    .buy-box {
+        margin-top: 26px;
+        display: flex;
+        gap: 18px;
+    }
+
+    .buy-btn {
+        padding: 14px 26px;
+        border-radius: var(--radius);
+        border: none;
+        cursor: pointer;
+        font-size: 16px;
+        font-weight: 500;
+        box-shadow: var(--shadow);
+        transition: 0.3s;
+    }
+
+    .buy-btn:first-child {
+        background: var(--white);
+        border: 1px solid var(--primary);
+        color: var(--primary);
+    }
+
+    .buy-btn.buy-now {
+        background: var(--primary);
+        color: var(--white);
+    }
+
+    .buy-btn:hover {
+        opacity: 0.85;
+    }
+
+    /* RELATED PRODUCTS */
+    .related-heading {
+        padding: 0 50px;
+        margin-top: 50px;
+        font-size: 24px;
+        font-weight: 600;
+    }
+
+    .related-box {
+        padding: 20px 50px 60px;
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+        gap: 28px;
+    }
+
+    .product-card {
+        background: var(--white);
+        border-radius: var(--radius);
+        overflow: hidden;
+        box-shadow: var(--shadow);
+        cursor: pointer;
+        transition: 0.3s;
+    }
+
+    .product-card:hover { transform: translateY(-4px); }
+
+    .product-card img {
+        width: 100%;
+        height: 230px;
+        object-fit: cover;
+    }
+
+    .product-info {
+        padding: 14px 16px;
+        font-size: 15px;
+    }
+
+    /* ZOOM MODAL */
+    #zoomModal {
+        position: fixed;
+        inset: 0;
+        background: rgba(0,0,0,0.85);
+        display: none;
+        align-items: center;
+        justify-content: center;
+    }
+
+    #zoomModal img {
+        width: 60%;
+        max-height: 80%;
+        object-fit: contain;
+    }
+    /* ------- new RIGHT BOX ------- */
+.productRightBox {
+    width: 48%;
+    padding: 30px;
+    background: #ffffff;
+    border-radius: 16px;
+    box-shadow: 0px 6px 20px rgba(0,0,0,0.06);
+    display: flex;
+    flex-direction: column;
+    gap: 18px;
+}
+
+/* Category */
+.pr-category {
+    font-size: 14px;
+    color: #666;
+    font-weight: 500;
+}
+
+/* Title */
+.pr-title {
+    font-size: 28px;
+    font-weight: 600;
+    color: #111;
+    margin: 0;
+    line-height: 1.3;
+}
+
+/* Rating row */
+.pr-rating-row {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    font-size: 14px;
+    color: #444;
+}
+
+.pr-stars {
+    font-size: 16px;
+}
+
+.pr-wishlist {
+    color: #ff3f3f;
+    font-weight: 500;
+}
+
+/* PRICE BLOCK */
+.pr-price-block {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.pr-main-price {
+    font-size: 30px;
+    font-weight: 700;
+    color: #111;
+}
+
+.pr-old-price {
+    font-size: 16px;
+    color: #777;
+    text-decoration: line-through;
+}
+
+.pr-discount {
+    font-size: 15px;
+    color: #ff4a1a;
+    font-weight: 600;
+}
+
+/* Stock */
+.pr-stock {
+    font-size: 14px;
+    color: #0f9d39;
+    font-weight: 600;
+}
+
+/* Features Box */
+.pr-features-box {
+    background: #f7f8fa;
+    padding: 12px 18px;
+    border-radius: 12px;
+}
+
+.pr-features-box ul {
+    padding-left: 18px;
+    line-height: 1.7;
+    margin: 0;
+    color: #333;
+    font-size: 15px;
+}
+
+/* Description */
+.pr-desc {
+    font-size: 15px;
+    line-height: 1.6;
+    color: #444;
+}
+
+/* BUY BUTTONS */
+.pr-buy-buttons {
+    display: flex;
+    gap: 14px;
+    margin-top: 8px;
+}
+
+.pr-cart-btn,
+.pr-buynow-btn {
+    flex: 1;
+    padding: 14px 0;
+    border-radius: 10px;
+    border: none;
+    font-size: 16px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: 0.2s ease-in-out;
+}
+
+.pr-cart-btn {
+    background: #111;
+    color: #fff;
+}
+
+.pr-cart-btn:hover {
+    opacity: 0.9;
+}
+
+.pr-buynow-btn {
+    background: #0042ff;
+    color: #fff;
+}
+
+.pr-buynow-btn:hover {
+    opacity: 0.9;
+}
+
+.related-product {
+    background: #fff;
+    border-radius: 14px;
+    overflow: hidden;
+    box-shadow: 0 4px 14px rgba(0,0,0,0.08);
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+.related-product:hover {
+    transform: translateY(-4px);
+}
+
+.related-product img {
+    width: 100%;
+    height: 230px;
+    object-fit: cover;
+}
+
+.related-title {
+    padding: 12px 15px;
+    font-size: 15px;
+    color: #111;
+    font-weight: 500;
+}
+
+.match-score {
+    padding: 0 15px 14px;
+    font-size: 13px;
+    color: #666;
+}
+
+/* -------------------------------------------------
+                NAVBAR FINAL CSS
+--------------------------------------------------*/
+
+.navbar {
+    width: 100%;
+    background: #ffffff;
+    padding: 14px 40px;
+    box-shadow: 0 4px 14px rgba(0,0,0,0.08);
+    display: flex;
+    align-items: center;
+    position: sticky;
+    top: 0;
+    z-index: 999;
+    gap: 20px;
+    justify-content: space-between;
+    flex-wrap: wrap;
+
+}
+
+/* LOGO */
+.logo {
+    font-size: 26px;
+    font-weight: 700;
+    color: #111;
+    letter-spacing: .5px;
+}
+
+/* GROUP containing home + categories + search */
+.nav-group {
+    display: flex;
+    align-items: center;
+    gap: 30px;
+}
+
+/* HOME LINK */
+.nav-group a {
+    text-decoration: none;
+    font-size: 16px;
+    font-weight: 500;
+    color: #111;
+    cursor: pointer;
+}
+
+/* DROPDOWN */
+.dropdown {
+    position: relative;
+}
+
+.drop-btn {
+    cursor: pointer;
+}
+
+.dropdown-content {
+    position: absolute;
+    top: 110%;
+    left: 0;
+    width: 220px;
+    background: #fff;
+    display: none;
+    flex-direction: column;
+    border-radius: 10px;
+    box-shadow: 0 8px 20px rgba(0,0,0,0.15);
+    padding: 10px 0;
+    z-index: 1000;
+}
+
+.dropdown:hover .dropdown-content {
+    display: flex;
+}
+
+.dropdown-content button {
+    width: 100%;
+    border: none;
+    background: transparent;
+    padding: 12px 18px;
+    text-align: left;
+    cursor: pointer;
+    font-size: 15px;
+    color: #333;
+    transition: 0.2s;
+}
+
+.dropdown-content button:hover {
+    background: #ffe3ef;
+}
+
+/* SEARCH BOX */
+.search-box {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.search-box input {
+    width: 220px;
+    padding: 8px 12px;
+    border-radius: 6px;
+    font-size: 15px;
+    border: 2px solid #ddd;
+    transition: 0.3s;
+}
+
+.search-box input:focus {
+    border-color: #111;
+}
+
+.search-box button {
+    padding: 8px 16px;
+    border-radius: 6px;
+    border: none;
+    background: #111;
+    color: #fff;
+    font-size: 15px;
+    cursor: pointer;
+    transition: 0.2s;
+}
+
+.search-box button:hover {
+    opacity: 0.85;
+}
+
+/* ----------------------------------------------
+    RESPONSIVE FIXES  
+-----------------------------------------------*/
+
+/* Tablet Fix */
+@media (max-width: 992px) {
+    .container {
+        flex-wrap: wrap;
+        padding: 20px 25px;
+    }
+
+    .left, 
+    .Right {
+        width: 100% !important;
+    }
+
+    .main-img {
+        height: 380px;
+    }
+}
+
+/* Mobile Fix */
+@media (max-width: 650px) {
+
+    body {
+        overflow-x: hidden !important;
+    }
+
+    .navbar {
+        padding: 12px 20px;
+        gap: 10px;
+    }
+
+    .nav-group {
+        flex-wrap: wrap;
+        gap: 15px;
+    }
+
+    .search-box input {
+        width: 150px;
+    }
+
+    /* main container */
+    .container {
+        flex-direction: column;
+        padding: 15px 18px;
+        gap: 22px;
+    }
+
+    .left, 
+    .Right {
+        width: 100% !important;
+        padding-right: 0 !important;
+    }
+
+    .main-img {
+        height: 300px;
+        border-radius: 12px;
+    }
+
+    .thumbs img {
+        width: 65px;
+        height: 65px;
+    }
+
+    /* product text */
+    .pr-title {
+        font-size: 22px;
+    }
+
+    .pr-main-price {
+        font-size: 24px;
+    }
+
+    .pr-desc {
+        font-size: 14px;
+    }
+
+    .pr-buy-buttons {
+        flex-direction: column;
+    }
+
+    .pr-cart-btn,
+    .pr-buynow-btn {
+        width: 100%;
+    }
+
+    .related-heading {
+        padding: 0 20px;
+        font-size: 20px;
+        margin-top: 30px;
+    }
+
+    .related-box {
+        padding: 10px 20px 40px;
+        grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+        gap: 20px;
+    }
+
+    #zoomModal img {
+        width: 90%;
+    }
+}
+
+
+
+
+</style>
+</head>
+<body>
+
+<div class="navbar">
+
+    <div class="logo">Swadeshi Clothing</div>
+
+    <div class="nav-group">
+
+        <a href="index.html">Home</a>
+
+        <div class="dropdown">
+            <a class="drop-btn">Categories ▾</a>
+
+            <div class="dropdown-content">
+                <button onclick="categoryMatch('saree')">Saree</button>
+                <button onclick="categoryMatch('unstich suit')">Unstich Suit</button>
+                <button onclick="categoryMatch('lehenga')">Lehenga</button>
+                <button onclick="categoryMatch('lanche')">Lanche</button>
+                <button onclick="categoryMatch('fancy dress')">Fancy Dress</button>
+                <button onclick="categoryMatch('crop top')">Crop Top</button>
+                <button onclick="categoryMatch('gown')">Gown</button>
+            </div>
+        </div>
+        
+        <a href="mycart.html" id="cartBtn">Cart</a>
+
+        <div class="search-box">
+            <input type="text" id="searchInput" placeholder="Search products...">
+            <button onclick="handleSearchClick()">Search</button>
+        </div>
+
+    </div>
+
+</div>
+
+
+<div class="container">
+
+    <div class="left">
+        <div class="main-img" id="mainImageBox">
+            <img id="mainImage" src="" alt="">
+        </div>
+        
+        <div class="thumbs" id="thumbContainer"></div>
+    </div>
+
+<div class="Right">
+
+    <div id="category" class="pr-category">Women • Fashion</div>
+
+    <h1 id="title" class="pr-title">Super Stylish Dress</h1>
+
+    <div class="pr-rating-row">
+        <span class="pr-stars">⭐⭐⭐⭐☆</span>
+        <span class="pr-rating-count">52 Ratings</span>
+        <span class="pr-wishlist">❤️ Wishlisted by 700+ users</span>
+    </div>
+
+    <div class="pr-price-block">
+        <span id="price" class="pr-main-price">₹1,499</span>
+        <span class="pr-old-price">₹2,999</span>
+        <span class="pr-discount">50% OFF</span>
+    </div>
+
+    <div class="pr-stock">🟢 In Stock</div>
+
+    <div class="pr-features-box">
+        <ul>
+            <li>At the lowest costs</li>
+            <li>7 Days Return Policy</li>
+            <li>100% Original Products</li>
+            
+        </ul>
+    </div>
+
+    <div id="description" class="pr-desc">
+        Premium quality dress made with soft & breathable fabric.
+        Perfect for parties, outings, and daily use.
+    </div>
+
+    <div class="pr-buy-buttons">
+        <button class="pr-cart-btn" id="addtocart">Add to Cart</button>
+        <button class="pr-buynow-btn">Buy Now</button>
+    </div>
+
+</div>
+
+
+
+</div>
+
+<h2 class="related-heading">Related Products</h2>
+<div id="relatedProducts" class="related-box">
+
+</div>
+
+<div id="zoomModal">
+    <button class="nav-btn left" onclick="prevImage()">&#10094;</button>
+    <img id="zoomedImage">
+    <button class="nav-btn right" onclick="nextImage()">&#10095;</button>
+</div>
+
+
+<script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
+<script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-database.js"></script>
+<script src="product.js"></script>
+<script>
+
+
+    document.querySelector(".pr-buynow-btn").addEventListener("click", () => {
+        window.location.href = `buy.html?id=${productId}`;
+    });
+</script>
+
+
+</body>
+</html>
+
+
+
+
