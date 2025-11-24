@@ -700,6 +700,13 @@
 
 
     document.querySelector(".pr-buynow-btn").addEventListener("click", () => {
+      
+      
+      if (data.inStock==false){
+        alert("Sorry but the product is out of Stock");
+        return;
+      }
+      
         window.location.href = `buy.html?id=${productId}`;
     });
 </script>
