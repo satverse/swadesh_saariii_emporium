@@ -151,12 +151,12 @@ function smartLocalSearch(query, products) {
 }
 
 
-
+let data={};
 
 /* LOAD PRODUCT */
 async function loadProduct() {
     const snap = await db.ref("products/" + productId).get();
-    const data = snap.val();
+    data = snap.val();
 
     if (!data) {
         titleBox.innerText = "Product Not Found!";
@@ -199,7 +199,19 @@ async function loadProduct() {
 
     // Show numeric rating count if available
     ratingCountSpan.innerText = data.rating ? `${data.rating} Rating` : "";
+    
+    const stock = document.querySelector(".pr-stock");
+    
+//productDisplay.style.display = "block";
 
+if (!("inStock" in data)) {
+  // agar firebase me ye field nahi hai toh default true set kar de
+  await set(ref(db, `products/${pid}/inStock`), true);
+  data.inStock = true;
+}
+stock.innerText=data.inStock ? "In Stock" : "Not in Stock";
+    
+    
     // ⭐ IMAGES
     allImages = data.media || [];
     mainImage.src = allImages[0];
