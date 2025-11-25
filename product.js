@@ -205,10 +205,17 @@ async function loadProduct() {
 //productDisplay.style.display = "block";
 
 if (!("inStock" in data)) {
-  // agar firebase me ye field nahi hai toh default true set kar de
-  await set(ref(db, `products/${pid}/inStock`), true);
-  data.inStock = true;
+  try {
+    if (!productId) throw new Error("productId missing from URL");
+    await db.ref(`products/${productId}/inStock`).set(true);
+    data.inStock = true;
+  } catch (err) {
+    console.error("Failed to set inStock default:", err);
+    // fallback: assume true so UI doesn't break
+    data.inStock = true;
+  }
 }
+
 stock.innerText=data.inStock ? "In Stock" : "Not in Stock";
     
     
